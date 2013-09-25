@@ -1,0 +1,123 @@
+<div ng-controller="ResultDetailCtrl">
+    <button class="btn" ng-click="open()">View details &raquo;</button>
+    <div modal="shouldBeOpen" close="close()" options="opts">
+        <div class="modal-header">
+            <h4>Custom Chart Builder</h4>
+        </div>
+        <div class="modal-body fuelux">
+            <div id="MyWizard" class="wizard">
+                <ul class="steps">
+                    <li ng-class="{'active':isCurrentStep(0)}"><span class="badge badge-info">1</span>Chart Type<span class="chevron"></span></li>
+                    <li ng-class="{'active':isCurrentStep(1)}"><span class="badge">2</span>Chart Name<span class="chevron"></span></li>
+                    <li ng-class="{'active':isCurrentStep(2)}"><span class="badge">3</span>Data Source<span class="chevron"></span></li>
+                    <li ng-class="{'active':isCurrentStep(3)}"><span class="badge">4</span>Save<span class="chevron"></span></li>
+                </ul>
+                <div class="actions">
+                    <button class="btn btn-mini btn-prev" ng-click="handlePrevious()" ng-show="!isFirstStep()"> <i class="icon-arrow-left"></i>Prev</button>
+                    <button class="btn btn-mini btn-next" ng-click="handleNext()">{{getNextLabel()}}<i class="icon-arrow-right"></i></button>
+                </div>
+            </div>
+            <div ng-switch="getCurrentStep()" class="step-content">
+                <div ng-switch-when="step1" ng-class="{'step-pane':true, 'active':isCurrentStep(0)}" id="step1">
+                    <div class="chartSelect" style="text-align:center;">
+                        <input type="radio" name="chartRadio" class="chartTypeRadio" ng-model="wizard.chartType" value="line" /><br/>
+                        <img src="images/vizpicker/charts/line.png" alt="" width="250"/>
+                    </div>
+
+                    <div class="chartSelect" style="text-align:center;">
+                        <input type="radio" name="chartRadio" class="chartTypeRadio" ng-model="wizard.chartType" value="bar" /><br/>
+                        <img src="images/vizpicker/charts/bar.png" alt="" width="250"/>
+                    </div>
+
+                    <div class="chartSelect" style="text-align:center;">
+                        <input type="radio" name="chartRadio" class="chartTypeRadio" ng-model="wizard.chartType" value="pie" /><br/>
+                        <img src="images/vizpicker/charts/pie.png" alt="" width="250" />
+                    </div>
+                </div>
+                <div ng-switch-when="step2" ng-class="{'step-pane':true, 'active':isCurrentStep(1)}" id="step2">
+                    <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label" for="wizardChartName">Select Chart Name</label>
+                            <div class="controls">
+                                <input name="wizardChartName" id="wizardChartName" ng-model="wizard.chartName" type="text"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="chartGraph">Results Limit</label>
+                            <div class="controls">
+                                <input name="chartGraph" id="chartGraph" value="5" ng-model="wizard.resultsLimit" type="number"><span class="help-inline">Default value is 5</span>
+                                </input>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="excelLimit">Results Limit (Excel)</label>
+                            <div class="controls">
+                                <input name="excelLimit" id="excelLimit" value="5" ng-model="wizard.excelLimit" type="number"><span class="help-inline">Default value is 5</span>
+                                </input>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="chartWidthSelect">Graph size</label>
+                            <div class="controls">
+                                <select id="chartWidthSelect" ng-model="wizard.chartWidthSelect" name="chartWidthSelect">
+                                    <option value="292">Size S - 292px</option>
+                                    <option value="452">Size M - 452px</option>
+                                    <option value="610">Size L - 610px</option>
+                                    <option value="930">Size XL - 930px</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="colorSelector">Graph Color</label>
+                            <div class="controls">
+                                <select id="colorSelector" ng-model="wizard.colorSelector" name="colorSelector">
+                                    <option value="multi">Multi Color</option>
+                                    <option value="single">Single Color</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div ng-switch-when="step3" ng-class="{'step-pane':true, 'active':isCurrentStep(2)}" id="step3">
+                    <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label" for="dataSourceSelect">Select data source</label>
+                            <div class="controls">
+                                <select id="dataSourceSelect" ng-model="wizard.dataSourceName" name="dataSourceSelect">
+                                    <option ng-repeat="dataSource in dataSources" value="{{dataSource.name}}">{{dataSource.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div ng-switch-when="step4" ng-class="{'step-pane':true, 'active':isCurrentStep(3)}" id="step4">
+                    <h3>Confirmation</h3>
+                    <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label" for="confirmChartType">Chart Type</label>
+                            <div class="controls">
+                                <input name="confirmChartType" ng-model="wizard.chartType" id="confirmChartType" type="text" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="confirmChartName">Chart Name</label>
+                            <div class="controls">
+                                <input name="confirmChartName" ng-model="wizard.chartName" id="confirmChartName" type="text" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="confirmChartDataSource">Chart Data Source</label>
+                            <div class="controls">
+                                <input name="confirmChartDataSource" ng-model="wizard.dataSourceName" id="confirmChartDataSource" type="text" readonly="readonly"/>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning cancel" ng-click="close()">Cancel</button>
+        </div>
+    </div>
+</div>

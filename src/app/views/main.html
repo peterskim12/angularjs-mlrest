@@ -1,0 +1,45 @@
+<div class="row spacer">
+    <div class="col-md-3">
+
+    </div>
+    <form class="form col-md-9">
+        <div class="input-group col-md-12">
+            <input class="form-control" id="appendedInputButton" ng-model="searchForm.text" type="text" />
+            <span class="input-group-btn">
+                <button ng-click="search()" class="btn btn-primary" type="submit">Search</button>
+            </span>
+        </div>
+    </form>
+</div>
+        <br /><br />
+
+<div class="row">
+    <div class="col-md-3">
+        <div ng-repeat="(facetGroupName, facetGroupValue) in facets" class="panel panel-default">
+            <div class="panel-heading">{{ facetGroupName | facetGroupLabel }}</div>
+            <ul class="list-group">
+            <li class="list-group-item" ng-repeat="facetValue in facetGroupValue.facetValues">{{ facetValue.name }} ({{ facetValue.count }})</li>
+            </ul>
+        </div>
+
+    </div><!--/span-->
+    <div class="col-md-9">
+        <div class="jumbotron">
+            <h3>Hello, world!</h3>
+            <p>This is a demo of using <a href="http://angularjs.org/">AngularJS</a> and <a href="http://twitter.github.io/bootstrap/">Twitter Bootstrap</a> with the MarkLogic REST API.</p>
+            <p><a href="#" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+        </div>
+
+        <div ng-repeat="resultGroup in results" class="row">
+            <div ng-repeat="result in resultGroup" class="col-md-4">
+                <h4>{{ result.metadata | getMetadata:'film-title'}}</h4>
+                <p><b>Nominee:</b> {{ result.metadata | getMetadata:'name' }}</p>
+                <p><b>Award:</b> {{ result.metadata | getMetadata:'nominee_award' }}</p>
+                <p><b>Year:</b> {{ result.metadata | getMetadata:'nominee_year' }}</p>
+            </div>
+        </div>
+
+    </div><!--/span-->
+</div><!--/row-->
+
+
