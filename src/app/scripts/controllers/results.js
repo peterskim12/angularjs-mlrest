@@ -19,6 +19,7 @@ angular.module('newAppbuilder2App.controllers', ['newAppbuilder2App.services.mar
       $scope.results = groupFilter(data.results, 3);
     });
 
+
     $scope.search = function() {
 //      var structuredFacetQuery = generateStructuredFacetQuery($routeParams.f);
 

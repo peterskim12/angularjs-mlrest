@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('newAppbuilder2App', ['newAppbuilder2App.controllers', 'newAppbuilder2App.services.marklogic', 'newAppbuilder2App.filters.search', 'newAppbuilder2App.filters.metadata', 'ui.bootstrap'])
+angular.module('newAppbuilder2App', ['newAppbuilder2App.controllers', 'newAppbuilder2App.services.marklogic', 'newAppbuilder2App.filters.search', 'newAppbuilder2App.filters.metadata', 'ui.bootstrap', 'ngRoute'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/list', {
